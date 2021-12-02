@@ -1,6 +1,6 @@
 package entity
 
-//User struct represent users table on the database
+//User struct represents users table on the database
 type User struct {
 	ID       uint64 `gorm:"primary_key:auto_increment" json:"id"`
 	Name     string `gorm:"type:varchar(255)" json:"name"`
