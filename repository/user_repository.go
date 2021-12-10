@@ -36,7 +36,14 @@ func (rep *userRepository) InsertUser(user entity.User) entity.User {
 }
 
 func (rep *userRepository) Updateuser(user entity.User) entity.User {
-	user.Password = hashAndSalt([]byte(user.Password))
+	if user.Password != "" {
+		user.Password = hashAndSalt([]byte(user.Password))
+	} else {
+		var tempUser entity.User
+		rep.connection.Find(&tempUser, user.ID)
+		user.Password = tempUser.Password
+	}
+
 	rep.connection.Save(&user)
 	return user
 }
