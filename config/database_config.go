@@ -30,6 +30,8 @@ func SetupDatabaseConnection() *gorm.DB {
 		panic("Failed to create a connection to database")
 	}
 
+	//This line code is used to generate table on the database automatically.
+	//If the entity will be generate has relation to another entity, the required entity will be generated too
 	db.AutoMigrate(&entity.Book{}, &entity.User{})
 
 	return db

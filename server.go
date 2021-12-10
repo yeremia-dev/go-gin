@@ -4,12 +4,17 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/yeremia-dev/go-gin/config"
 	"github.com/yeremia-dev/go-gin/controller"
+	"github.com/yeremia-dev/go-gin/repository"
+	"github.com/yeremia-dev/go-gin/service"
 	"gorm.io/gorm"
 )
 
 var (
 	db             *gorm.DB                  = config.SetupDatabaseConnection()
-	authController controller.AuthController = controller.NewAuthController()
+	userRepository repository.UserRepository = repository.NewUserRepository(db)
+	jwtService     service.JWTService        = service.NewJWTService()
+	authService    service.AuthService       = service.NewAuthService(userRepository)
+	authController controller.AuthController = controller.NewAuthController(authService, jwtService)
 )
 
 func main() {
