@@ -10,7 +10,7 @@ import (
 
 type UserRepository interface {
 	InsertUser(user entity.User) entity.User
-	Updateuser(user entity.User) entity.User
+	UpdateUser(user entity.User) entity.User
 	VerifyCredential(email string, password string) interface{}
 	IsDuplicateEmail(email string) (tx *gorm.DB)
 	FindByEmail(email string) entity.User
@@ -35,7 +35,7 @@ func (rep *userRepository) InsertUser(user entity.User) entity.User {
 
 }
 
-func (rep *userRepository) Updateuser(user entity.User) entity.User {
+func (rep *userRepository) UpdateUser(user entity.User) entity.User {
 	if user.Password != "" {
 		user.Password = hashAndSalt([]byte(user.Password))
 	} else {
