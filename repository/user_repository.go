@@ -70,7 +70,7 @@ func (rep *userRepository) FindByEmail(email string) entity.User {
 
 func (rep *userRepository) ProfileUser(userId string) entity.User {
 	var user entity.User
-	rep.connection.Find(&user, userId)
+	rep.connection.Preload("Books").Preload("Books.User").Find(&user, userId)
 	return user
 }
 
