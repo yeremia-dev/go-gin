@@ -98,6 +98,8 @@ func (c *bookController) Update(context *gin.Context) {
 		panic(errToken.Error())
 	}
 	claims := token.Claims.(jwt.MapClaims)
+	bookIDTemp, _ := strconv.ParseUint(context.Param("id"), 0, 64)
+	bookUpdateDTO.ID = bookIDTemp
 	userID := fmt.Sprintf("%v", claims["user_id"])
 	if c.bookService.IsAllowedToEdit(userID, bookUpdateDTO.ID) {
 		id, errID := strconv.ParseUint(userID, 10, 64)
